@@ -18,6 +18,8 @@ We will be exploring the impact of game statistics at the 15 minute mark in prof
 
 - **The Response Variable**: Predict which team wins based on Game Statistics at the 15 minute mark.
 
+This response variable was chosen since winning is a part of the game. The game statistics at this 15 minute mark can be helpful for teams and viewers to see a possible trend between the conditions/game state teams need to achieve to possibly lead to a win in the early game, which is an important period of time for setting up the success of the team for a win.
+
 The metric that I will be using to evaluate this model is accuracy. Accuracy is a good evalution metric for this model as in a single Professional League of Legends match, there is always going to be a winning team and losing team. This makes the other metrics (precision, F1-Score, etc.) not a very good metric to evaluate this model since the data is quite balanced - that with every team that wins, there is always a team that loses per `gameid`.
 
 ## Baseline Model
@@ -28,8 +30,9 @@ The data classification for these columns is as follows:
 - Gold Differential at 15 minutes (`'golddiffat15'`): Quantitative Continuous
 - Team that got First Dragon Kill (`'firstdragon'`): Qualitative Nominal
 - Team that got First Herald Kill (`'firstherald'`): Qualitative Nominal
+- Number of Rift Herald Kills (`'heralds'`): Quantitative Discrete
 
-The encodings that were done to the data were performed by standardizing the `'golddiffat15'` column since we want to minimize the number of outliers (e.g. large leads that are very positive/very negative for the respective team) and make the data comparable to other data in the future by using `sklearn` module `StandardScaler` package. Additional transformations on the remaining two features were unneeded as they were already in a "one-hot" like format (boolean).
+The encodings that were done to the data were performed by standardizing the `'golddiffat15'` column since we want to minimize the number of outliers (e.g. large leads that are very positive/very negative for the respective team) and make the data comparable to other data in the future by using `sklearn` module `StandardScaler` package. Additional transformations on the remaining three features were unneeded as they were already in a "one-hot" like format (boolean) for columns `'firstdragon'` and `'firstherald'` while the an ordinal encoding like format: 0, 1 and 2 heralds, since there is a defined order.
 
 I think that the baseline model prediction of the winner of matches performed alright. With an accuracy of ~0.74, I don't think it truly is able to give a very good prediction of who killed the first baron given the limited number of features as they don't truly capture the game state at the 15 minute mark. This is because these three metrics only give a small glimpse of what the game state is like. Even though one team is able to get the first herald or the first dragon, it doesn't suggest that the team is currently leading or in a better state than the other. In other words, there could be a multitude of variables that contributed to which team killed the first dragon/herald.
 
@@ -65,4 +68,4 @@ Our significance level will be `0.05`. And our test statistic will be the signed
 
 Since the number of Blue-Sided Teams and Red-Sided teams are roughly the same - one team is always Blue Side and one team is always Red Side - we will be using Accuracy for the evaluation metric.
 
-Using the determined signed differences between the accuracy between the match winner predictions, we wanted to determine how many values fell above the observed accuracy difference. Our determined p-value was 0.64 which is much greater than the significance level of 0.05. This suggests that the side chosen doesn't truly effect the model's performance, which is to be expected. As a larger esport in the scene, League of Legends seemingly is trying to make sure that some of the variables that occur in the game allow for the expression of skill and stragtegy rather than just straight luck. Especially for the side determination, if there was a large discrepancy between sides, our model wouldn't probably not be able to predict the winner of each match due to the addition of an extraneous variable in the path to victory for teams. 
+Using the determined signed differences between the accuracy between the match winner predictions, we wanted to determine how many values fell above the observed accuracy difference. Our determined p-value was 0.64 which is much greater than the significance level of 0.05. This suggests that the side chosen doesn't truly effect the model's performance, which is to be expected. As a larger esport in the scene, League of Legends seemingly is trying to make sure that some of the variables that occur in the game allow for the expression of skill and strategy rather than just straight luck. Especially for the side determination, if there was a large discrepancy between sides, our model wouldn't probably not be able to predict the winner of each match due to the addition of an extraneous variable in the path to victory for teams. 
