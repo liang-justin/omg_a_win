@@ -55,6 +55,14 @@ Two Groups:
 - Blue Side
 - Red Side
 
+Our Permutation test will be as follows:
+
+- **Null Hypothesis:** The accuracy of our model predicted that both Blue and Red Side are roughly the same. The differences in the accuracy is due to random error.
+
+- **Alternative Hypothesis**: Our model isn't fair. It is more accurate for Teams on Blue Side rather than Teams on Red Side.
+
+Our significance level will be `0.05`. And our test statistic will be the signed differenced in accuracy between the predicted game outcome on Blue-side and teams on Red-side.
+
 Since the number of Blue-Sided Teams and Red-Sided teams are roughly the same - one team is always Blue Side and one team is always Red Side - we will be using Accuracy for the evaluation metric.
 
 Using the determined signed differences between the accuracy between the match winner predictions, we wanted to determine how many values fell above the observed accuracy difference. Our determined p-value was 0.64 which is much greater than the significance level of 0.05. This suggests that the side chosen doesn't truly effect the model's performance, which is to be expected. As a larger esport in the scene, League of Legends seemingly is trying to make sure that some of the variables that occur in the game allow for the expression of skill and stragtegy rather than just straight luck. Especially for the side determination, if there was a large discrepancy between sides, our model wouldn't probably not be able to predict the winner of each match due to the addition of an extraneous variable in the path to victory for teams. 
